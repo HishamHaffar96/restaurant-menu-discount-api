@@ -10,9 +10,10 @@ Vue.component('item-form', {
             form: {
                 name: '',
                 price: '',
-                image: '',
+                description: '',
                 category_id: '',
-            }
+            },
+            mediaCollections: ['gallery']
         }
     },
     watch: {

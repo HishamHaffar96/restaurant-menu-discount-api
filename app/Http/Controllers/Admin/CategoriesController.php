@@ -37,10 +37,10 @@ class CategoriesController extends Controller
             $request,
 
             // set columns to query
-            ['id', 'name', 'hierarchical_data', 'parent_id', 'position'],
+            ['id', 'name', 'parent_id'],
 
             // set columns to searchIn
-            ['id', 'name', 'description', 'hierarchical_data'],
+            ['id', 'name', 'description',],
             function ($query) use ($request) {
                 $query->with(['parentCategory']);
             }

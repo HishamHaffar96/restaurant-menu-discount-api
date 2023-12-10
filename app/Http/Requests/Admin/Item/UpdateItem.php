@@ -27,8 +27,8 @@ class UpdateItem extends FormRequest
     {
         return [
             'name' => ['sometimes', 'string'],
+            'description' => ['required', 'string'],
             'price' => ['sometimes', 'numeric'],
-            'image' => ['nullable', 'string'],
             'category_id' => ['required'],
 
         ];

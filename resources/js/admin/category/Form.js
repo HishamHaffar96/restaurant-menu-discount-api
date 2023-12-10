@@ -11,7 +11,8 @@ Vue.component('category-form', {
                 name: '',
                 description: '',
                 parent_id: '',
-            }
+            },
+            mediaCollections: ['gallery']
         }
     },
     watch: {

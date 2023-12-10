@@ -27,8 +27,9 @@ class StoreItem extends FormRequest
     {
         return [
             'name' => ['required', 'string'],
+            'description' => ['required', 'string'],
             'price' => ['required', 'numeric'],
-            'image' => ['nullable', 'string'],
+
             'category_id' => ['required'],
 
         ];

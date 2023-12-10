@@ -4,13 +4,23 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-class Item extends Model
+use Brackets\Media\HasMedia\ProcessMediaTrait;
+use Brackets\Media\HasMedia\AutoProcessMediaTrait;
+use Brackets\Media\HasMedia\HasMediaCollectionsTrait;
+use Spatie\MediaLibrary\HasMedia;
+use Brackets\Media\HasMedia\HasMediaThumbsTrait;
+class Item extends Model implements HasMedia
 {
+    use ProcessMediaTrait;
+    use AutoProcessMediaTrait;
+    use HasMediaCollectionsTrait;
+    use HasMediaThumbsTrait;
+    use HasMediaThumbsTrait;
     protected $fillable = [
         'name',
         'price',
-        'image',
         'category_id',
+        'description'
 
     ];
     protected $dates = [
@@ -18,7 +28,12 @@ class Item extends Model
         'updated_at',
 
     ];
-    protected $appends = ['resource_url'];
+    protected $appends = [
+        'resource_url',
+        'media'
+        //'discount'
+
+    ];
 
      /**
      * Create an attribute with a given amount.
@@ -26,9 +41,19 @@ class Item extends Model
      * @param float $amount
      * @return Attribute
      */
-    private function createAttribute(float $amount): Attribute
+    private function createAttribute($amount= 0.00 )
     {
-        return new Attribute(['get' => fn () => $amount]);
+        return  $amount;
+    }
+
+    public function registerMediaCollections(): void {
+        $this->addMediaCollection('gallery')
+            ->accepts('image/*')
+            ->maxNumberOfFiles(20);
+    }
+    public function registerMediaConversions( $media = null): void
+    {
+        $this->autoRegisterThumb200();
     }
 
     /* ************************ ACCESSOR ************************* */
@@ -36,6 +61,23 @@ class Item extends Model
     {
         return url('/admin/items/'.$this->getKey());
     }
+
+    public function getMediaAttribute()
+    {
+        try {
+            $mediaItems = $this->getMedia('gallery');
+            $publicUrl = $mediaItems[0]->getUrl();
+
+            return $publicUrl;
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+        return null;
+
+    }
+
+
+
      /**
      * Get the effective discount for the item.
      *
@@ -43,7 +85,7 @@ class Item extends Model
      *
      * @return Attribute
      */
-    public function discount(): Attribute
+    public function getDiscountAttribute()
     {
         // Check for item-specific discount
         $itemDiscount = Discount::where('type', 'item')->where('discountable_id', $this->id)->first();
@@ -53,16 +95,22 @@ class Item extends Model
         }
 
         // Check for category-specific discount
-        $categoryDiscount = $this->category->getEffectiveDiscount();
+        try {
+            $categoryDiscount = $this->category->getEffectiveDiscount();
 
         if ($categoryDiscount) {
             return $this->createAttribute($categoryDiscount->amount);
         }
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+
 
         // Check for general menu discount
         $menuDiscount = Discount::where('type', 'menu')->where('discountable_id', null)->first();
 
         if ($menuDiscount) {
+
             return $this->createAttribute($menuDiscount->amount);
         }
 

@@ -15,7 +15,7 @@ $factory->define(Brackets\AdminAuth\Models\AdminUser::class, function (Faker\Gen
         'created_at' => $faker->dateTime,
         'updated_at' => $faker->dateTime,
         'last_login_at' => $faker->dateTime,
-        
+
     ];
 });/** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\Models\Category::class, static function (Faker\Generator $faker) {
@@ -27,8 +27,7 @@ $factory->define(App\Models\Category::class, static function (Faker\Generator $f
         'created_at' => $faker->dateTime,
         'updated_at' => $faker->dateTime,
         
-        'hierarchical_data' => ['en' => $faker->sentence],
-        
+
     ];
 });
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
@@ -40,14 +39,14 @@ $factory->define(App\Models\Item::class, static function (Faker\Generator $faker
         'category_id' => $faker->sentence,
         'created_at' => $faker->dateTime,
         'updated_at' => $faker->dateTime,
-        
-        
+
+
     ];
 });
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\Models\Discount::class, static function (Faker\Generator $faker) {
     return [
-        
-        
+
+
     ];
 });

@@ -26,6 +26,26 @@
         <div v-if="errors.has('parent_id')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('parent_id') }}</div>
     </div>
 </div>
+<div class="form-group row align-items-center" :class="">
+    <label for="name" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('admin.category.columns.image') }}</label>
+    <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
+
+        @if(isset($category))
+        @include('brackets/admin-ui::admin.includes.media-uploader', [
+        'mediaCollection' => app(App\Models\Category::class)->getMediaCollection('gallery'),
+        'media' => $category->getThumbs200ForCollection('gallery'),
+        'label' => 'Gallery'
+        ])
+        @else
+        @include('brackets/admin-ui::admin.includes.media-uploader', [
+        'mediaCollection' => app(App\Models\Category::class)->getMediaCollection('gallery'),
+        'label' => 'Gallery'
+        ])
+        @endif
+
+    </div>
+
+</div>
 
 {{-- <div class="form-group row align-items-center" :class="{'has-danger': errors.has('position'), 'has-success': fields.position && fields.position.valid }">
     <label for="position" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('admin.category.columns.position') }}</label>

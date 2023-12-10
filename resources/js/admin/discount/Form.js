@@ -11,11 +11,12 @@ Vue.component('discount-form', {
         return {
             form: {
                 type: '',
-                amount: '',
+                amount: 0.00,
                 category_id: '',
                 item_id: '',
                 discountable_id: '',
-            }
+            },
+
         }
     },
     watch: {

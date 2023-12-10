@@ -29,7 +29,7 @@ class UpdateDiscount extends FormRequest
     public function rules(): array
     {
         return [
-            "amount" => ['required'],
+            "amount" => ['max:100','min:0.0','numeric','required'],
             "type" => ['required'],
             'item_id' => ['nullable'],
             'category_id' => ['nullable'],

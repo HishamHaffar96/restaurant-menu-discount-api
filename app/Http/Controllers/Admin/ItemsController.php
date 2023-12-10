@@ -38,10 +38,10 @@ class ItemsController extends Controller
             $request,
 
             // set columns to query
-            ['id', 'name', 'price', 'image', 'category_id'],
+            ['id', 'name', 'price', 'category_id'],
 
             // set columns to searchIn
-            ['id', 'name', 'image'],
+            ['id', 'name',],
             function ($query) use ($request) {
                 $query->with(['category']);
             }

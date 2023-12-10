@@ -43,9 +43,9 @@ return [
             'id' => 'ID',
             'name' => 'Name',
             'description' => 'Description',
-            'hierarchical_data' => 'Hierarchical data',
             'parent_id' => 'Parent',
-            'position' => 'Position',
+            'image' => 'Image',
+
 
         ],
     ],

@@ -58,7 +58,7 @@ class StoreCategory extends TranslatableFormRequest
         $sanitized = $this->validated();
         if($this->getParentId()!=null){
             $parentCategory= Category::find($this->getParentId());
-           if(count($parentCategory->hierarchicalPath())>=3){
+           if(isset($parentCategory)&&count($parentCategory->hierarchicalPath())>=4){
              $validator = Validator::make([], []);
              // Manually set errors
              $validator->errors()->add('parent_id', "you can't put more than 4 subcatgories");
