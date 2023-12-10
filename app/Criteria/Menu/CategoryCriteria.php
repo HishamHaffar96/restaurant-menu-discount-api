@@ -43,6 +43,6 @@ class CategoryCriteria implements CriteriaInterface
     {
         $category_id=$this->request->input('category_id');
 
-        return $model->where($category_id==null?'parent_id':'id', $category_id);
+        return $model->where('parent_id', $category_id);
     }
 }

@@ -106,8 +106,7 @@ class Category extends Model implements HasMedia
     {
         // Construct the path string by joining category names with '/'
         $path = $this->hierarchicalPath()->reverse();
-
-        return ['hierarchicalPath'=>$path->pluck('name')->toArray(),"hierarchicalPathIds"=>$path->pluck('id')->toArray(),'strPath'=>$path->pluck('name')->implode('/')];
+        return ['hierarchicalPath'=>array_combine($path->pluck('id')->toArray(),$path->pluck('name')->toArray()) ,'strPath'=>$path->pluck('name')->implode('/')];
 
     }
 
